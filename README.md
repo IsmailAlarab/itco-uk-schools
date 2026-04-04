@@ -152,10 +152,9 @@ TBC
 
 ## Licence
 
-MIT — free to use and adapt with attribution.
+MIT - free to use and adapt with attribution.
 
----
 
 ## Contact
 
-Ismail Alarab — i.alarab@chi.ac.uk — University of Chichester
+Ismail Alarab - i.alarab@chi.ac.uk — University of Chichester
