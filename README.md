@@ -11,12 +11,12 @@ Reproducible code for the paper:
 ## What this does
 
 Most thermal comfort research stops at *predicting* discomfort.
-This framework goes further: given a discomfort instance, it recommends the **smallest practical changes** — adjusting the temperature setpoint, opening a window, or adding a layer of clothing — to restore comfort while minimising energy use.
+This framework goes further: given a discomfort instance, it recommends the **smallest practical changes**, adjusting the temperature setpoint, opening a window, or adding a layer of clothing to restore comfort while minimising energy use.
 
 Key findings:
 - **Gradient Boosting + Differential Evolution** is the best-performing combination (99.1% comfort restoration, MATAW = 0.73°C)
 - Adding clothing and window adjustments reduces heating-season temperature changes by **39–65%**
-- **38% of cold-classroom discomfort** can be resolved by clothing adjustment alone — no HVAC needed
+- **38% of cold-classroom discomfort** can be resolved by clothing adjustment alone: no HVAC needed
 
 ---
 
@@ -93,7 +93,7 @@ The script runs the full pipeline end-to-end:
 | 1 | Data loading, PMV computation, comfort labelling |
 | 2 | Classifier training with 10-fold CV (LR, MLP, Gradient Boosting) |
 | 3 | Identification of optimisation candidates |
-| 4 | Inverse optimisation — all model × case × solver combinations |
+| 4 | Inverse optimisation - all model × case × solver combinations |
 | 5 | Two-proportion z-tests on success rates |
 | 6 | Prescriptive analytics (single-action restoration rates) |
 | 7 | Figure generation and CSV export |
@@ -111,8 +111,8 @@ Three surrogate classifiers:
 - Gradient Boosting (GB)
 
 Two solvers:
-- **COBYLA** — gradient-free local solver (baseline)
-- **Differential Evolution (DE)** — population-based global solver (proposed)
+- **COBYLA** - gradient-free local solver (baseline)
+- **Differential Evolution (DE)**  population-based global solver (proposed)
 
 Three feature-action spaces:
 - Temperature only
@@ -157,4 +157,4 @@ MIT - free to use and adapt with attribution.
 
 ## Contact
 
-Ismail Alarab - i.alarab@chi.ac.uk — University of Chichester
+Ismail Alarab - i.alarab@chi.ac.uk - University of Chichester
