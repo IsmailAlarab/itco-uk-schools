@@ -3,7 +3,6 @@
 Reproducible code for the paper:
 
 > **Data-Driven Thermal Comfort Control in UK Schools Using Evolutionary Surrogate Inversion**
-> Ismail Alarab, Simant Prakoonwit
 > ***
 
 ---
