@@ -44,60 +44,27 @@ thermal-comfort-inverse-optimisation/
 
 ## Dataset
 
+## Dataset
 This study uses the **Korsavi UK-schools dataset** from the
 [ASHRAE Global Occupant Behavior Database](https://ashraeobdatabase.com/).
 
-The dataset is publicly available but requires **free registration** at the ASHRAE database portal.
+The CSV files are included in this repository (`korsavi_part1.csv`,
+`korsavi_part2.csv`) for reproducibility. They are publicly available
+to anyone who access the ASHRAE database portal.
 
-After registering:
-1. Search for *"Korsavi"* or *"UK schools thermal comfort"*
-2. Download **Part 1** and **Part 2** as CSV files
-3. Place them in the project root as `korsavi_part1.csv` and `korsavi_part2.csv`
-
-**Or** paste your direct download URLs into the two constants at the top of
-`thermal_comfort_study.py` and the script will download them automatically:
-
-```python
-Dataset URL = https://ashraeobdatabase.com/#/export --> Navigate to
-Selected Parameters
-
-Fan Status
-
-Door Status
-
-HVAC Measurement
-
-Lighting Status
-
-Occupant Number
-
-Occupancy Measurement
-
-Other HeatWave
-
-Other Role of habits in consumption
-
-Other IAQ in Affordable Housing
-
-Plug Load
-
-Shading Status
-
-Window Status
-
-UK: Coventry
-
-Educational: Classroom
-
-Study 1
-
-PART1 and PART2 
-```
+To obtain the files directly from the source:
+1. Go at https://ashraeobdatabase.com/
+2. Under **Export**, select the following parameters:
+   - Country: **UK: Coventry**
+   - Building type: **Educational: Classroom**
+   - Study: **Study 1**
+3. Export the zipped folder containing both datasets and rename them as:
+   `korsavi_part1.csv` and `korsavi_part2.csv`
 
 Original dataset citation:
-> Korsavi, S. S., Montazami, A., & Brusey, J. (2018). Developing a design framework
-> to facilitate adaptive behaviors in UK schools. *Energy and Buildings*, 179, 360–373.
-
+> Korsavi, S. S., Montazami, A., & Brusey, J. (2018). Developing a design
+> framework to facilitate adaptive behaviors in UK schools.
+> *Energy and Buildings*, 179, 360–373.
 ---
 
 ## Installation
