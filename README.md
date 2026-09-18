@@ -2,7 +2,7 @@
 
 Reproducible code for the paper:
 
-> **Data-Driven Thermal Comfort Control in UK Schools Using Evolutionary Surrogate Inversion**
+> **Data-Driven Thermal Comfort Control in UK Schools Using Evolutionary Surrogate Inversion: An Offline Prescriptive Analytics Study**
 > ***
 
 ---
@@ -10,10 +10,10 @@ Reproducible code for the paper:
 ## What this does
 
 Most thermal comfort research stops at *predicting* discomfort.
-This framework goes further: given a discomfort instance, it recommends the **smallest practical changes**, adjusting the temperature setpoint, opening a window, or adding a layer of clothing to restore comfort while minimising energy use.
+This framework goes further: given a discomfort instance, it recommends the **smallest practical changes**, adjusting the temperature setpoint, opening a window, or adding a layer of clothing to restore comfort while minimising indicative energy-related effort.
 
 Key findings:
-- **Gradient Boosting + Differential Evolution** is the best-performing combination (99.1% comfort restoration, MATAW = 0.73°C)
+- **Gradient Boosting + Differential Evolution** is the best-performing combination (99.1% surrogate-predicted comfort restoration, 67.3% PMV-verified, MATAW = 1.31°C)
 - Adding clothing and window adjustments reduces heating-season temperature changes by **39–65%**
 - **38% of cold-classroom discomfort** can be resolved by clothing adjustment alone: no HVAC needed
 
@@ -69,7 +69,7 @@ Original dataset citation:
 ## Installation
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/thermal-comfort-inverse-optimisation.git
+git clone https://github.com/IsmailAlarab/thermal-comfort-inverse-optimisation.git
 cd thermal-comfort-inverse-optimisation
 pip install -r requirements.txt
 ```
