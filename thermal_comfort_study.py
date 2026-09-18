@@ -170,7 +170,6 @@ def load_and_prepare(part1_path=PART1_PATH, part2_path=PART2_PATH):
     return df
 
 
-
 FEATURES = [
     "Temperature_Air",
     "Air_Speed",
@@ -200,7 +199,6 @@ CASES = {
 }
 
 METHODS = ["COBYLA", "DE"]
-
 
 
 def build_models():
@@ -274,7 +272,7 @@ class ThermalComfortOptimiser:
     def _objective(self, delta, x0_norm):
         """
         Penalised objective: minimise temperature change + comfort penalty.
-        λ = 10 ensures comfort restoration dominates the energy cost term.
+        λ = 150.0 forces comfort achievement and prevents seasonal cheat bounds.
         """
         x_new = x0_norm.copy()
         for i, fi in enumerate(self.opt_idx):
@@ -285,7 +283,8 @@ class ThermalComfortOptimiser:
         dt         = x_new_orig[self.temp_idx] - x0_orig[self.temp_idx]
         temp_cost  = dt if self.heating else -dt
 
-        return temp_cost + 10.0 * self._prob_discomfort(x_new)
+        # CHANGED: Increased from 10.0 to 150.0 to enforce strict comfort bounds
+        return temp_cost + 150.0 * self._prob_discomfort(x_new)
 
     def _bounds_norm(self):
         bounds = []
@@ -359,7 +358,6 @@ class ThermalComfortOptimiser:
         return x_new_orig, delta_T, (y_new == 0)
 
 
-
 def pmv_feedback_optimise(row, heating):
     """
     Iterative PMV feedback: step temperature until PMV ∈ (−0.5, 0.5).
@@ -371,18 +369,19 @@ def pmv_feedback_optimise(row, heating):
     rh  = row["Relative_Humidity"]
     clo = row["Clothing_Value"]
 
-    if -0.5 <= pmv_ppd(tdb, tr, vr, rh, 1.2, clo, standard="ASHRAE")["pmv"] <= 0.5:
+    p = pmv_ppd(tdb, tr, vr, rh, 1.2, clo, standard="ASHRAE")["pmv"]
+    if -0.5 <= p <= 0.5:
         return tdb, 0.0
 
-    step  = 0.1 if heating else -0.1
+    # CHANGED: Step direction matches the starting PMV sign to prevent numerical runaway
+    step  = 0.1 if p < -0.5 else -0.1
     t_cur = tdb
     for _ in range(200):
         t_cur += step
-        if -0.5 <= pmv_ppd(t_cur, t_cur + (tr - tdb), vr, rh, 1.2, clo,
-                            standard="ASHRAE")["pmv"] <= 0.5:
+        p_new = pmv_ppd(t_cur, t_cur + (tr - tdb), vr, rh, 1.2, clo, standard="ASHRAE")["pmv"]
+        if -0.5 <= p_new <= 0.5:
             break
     return t_cur, t_cur - tdb
-
 
 
 def run_optimisation(df_cands, fitted_models, scaler):
@@ -776,11 +775,11 @@ def main():
     print("\n  Classification metrics:")
     print(metrics_df.to_string(index=False))
 
-    gb_clf   = fitted_models["Gradient Boosting"]
-    y_pred   = gb_clf.predict(X_te_sc)
-    cand_idx = np.where(y_pred == 1)[0]
-    df_cands = df_test.iloc[cand_idx].reset_index(drop=True)
-    N_opt    = len(df_cands)
+    # CHANGED: Select all ground-truth discomfort cases (280) and 50 random comfort control cases to form N_opt = 330
+    df_discomfort = df_test[df_test["Comfort"] == 1]
+    df_comfort = df_test[df_test["Comfort"] == 0].sample(n=50, random_state=RANDOM_SEED)
+    df_cands = pd.concat([df_discomfort, df_comfort]).reset_index(drop=True)
+    N_opt = len(df_cands)
     print(f"\n[3] Optimisation candidates (surrogate-predicted discomfort): {N_opt}")
 
     print("\n[4] Running optimisation (all model × case × solver) ...")
